@@ -9,17 +9,15 @@ from datetime import datetime
 import os
 import io
 
-# ----------------------------
-# Load Environment Variables
-# ----------------------------
+
+
 
 load_dotenv()
 
 app = Flask(__name__)
 
-# ----------------------------
-# Gemini API
-# ----------------------------
+
+
 
 client = genai.Client(
     api_key=os.getenv("GEMINI_API_KEY")
@@ -28,18 +26,17 @@ client = genai.Client(
 latest_question = ""
 latest_answer = ""
 
-# ----------------------------
-# Home Page
-# ----------------------------
+
+
+
 
 @app.route("/")
 def home():
     return render_template("index.html")
 
 
-# ----------------------------
-# Ask AI
-# ----------------------------
+
+
 
 @app.route("/ask", methods=["POST"])
 def ask():
@@ -119,9 +116,9 @@ Question:
         return jsonify({
             "answer": f"❌ Error : {str(e)}"
         })
-# ------------------------------------
-# Download PDF
-# ------------------------------------
+
+
+
 
 @app.route("/download_pdf")
 def download_pdf():
@@ -155,9 +152,8 @@ def download_pdf():
 
     story = []
 
-    # -------------------------
-    # Header
-    # -------------------------
+    
+
 
     story.append(
         Paragraph(
@@ -201,9 +197,7 @@ def download_pdf():
 
     story.append(Spacer(1, 20))
 
-    # -------------------------
-    # AI Answer Formatting
-    # -------------------------
+    
 
     lines = latest_answer.split("\n")
 
@@ -292,9 +286,8 @@ def download_pdf():
     )
 
 
-# ------------------------------------
-# Run Flask
-# ------------------------------------
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
